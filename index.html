@@ -54,7 +54,7 @@
 
   </footer>
 
-  <script>
+  <!-- <script>
     // Set the date and time when the registration should open
     const openTime = new Date("Oct 14, 2024 20:17:00").getTime();
 
@@ -85,7 +85,61 @@
         countdownElement.innerHTML = `${displayHours}:${displayMinutes}:${displaySeconds}`;
       }
     }, 1000);
+  </script> -->
+
+
+  <script>
+    // Set the date and time when the registration should open (IST)
+    const openTime = new Date("Oct 14, 2024 18:00:00").getTime();
+    const countdownElement = document.getElementById("time");
+    const formLink = document.getElementById("form-link");
+  
+    async function getCurrentTime() {
+      try {
+        const response = await fetch('http://worldtimeapi.org/api/timezone/Asia/Kolkata');
+        const data = await response.json();
+        return new Date(data.datetime).getTime(); // Return the current time in milliseconds
+      } catch (error) {
+        console.error("Error fetching time:", error);
+        return new Date().getTime(); // Fallback to local time if API fails
+      }
+    }
+  
+    async function startCountdown() {
+      const now = await getCurrentTime(); // Get current time from API once
+  
+      // Calculate the difference between the open time and the current time
+      const timeLeft = openTime - now;
+  
+      // Start the countdown interval
+      const countdownInterval = setInterval(() => {
+        // Calculate remaining time
+        const remainingTime = timeLeft - (Date.now() - now);
+  
+        if (remainingTime < 0) {
+          clearInterval(countdownInterval);
+          countdownElement.innerHTML = "00:00:00"; // Show 00:00:00 when timer ends
+          formLink.style.display = "block"; // Show the registration link
+        } else {
+          // Time calculations
+          const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+  
+          // Add leading zeros to hours, minutes, and seconds
+          const displayHours = hours < 10 ? '0' + hours : hours;
+          const displayMinutes = minutes < 10 ? '0' + minutes : minutes;
+          const displaySeconds = seconds < 10 ? '0' + seconds : seconds;
+  
+          // Display the result in the countdown element
+          countdownElement.innerHTML = `${displayHours}:${displayMinutes}:${displaySeconds}`;
+        }
+      }, 1000);
+    }
+  
+    startCountdown(); // Start the countdown
   </script>
+  
 
 </body>
 </html>
