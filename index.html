@@ -33,13 +33,17 @@
     <p class="open-date"><strong>Registration opens on October 15, 2024, at 12:00 PM.</strong></p>
 
     <!-- Countdown timer -->
-    <div id="countdown">Time remaining: <span id="time">00:00:00</span> hh:mm:ss</div>
+    <div id="countdown">Time remaining: <span id="time">00:00:00</span> <h5>hh:mm:ss</h5></div>
     
+    <!-- Registration link -->
+    <div id="form-link">
+      <a href="YOUR_GOOGLE_FORM_LINK" target="_blank" class="btn btn-register">Register Here</a>
+    </div>
 
-  <!-- Registration link -->
+  <!-- Registration link
   <div id="form-link">
-    <a href="YOUR_GOOGLE_FORM_LINK" target="_blank" class="btn btn-register">Register Here</a>
-  </div>
+    <a href="YOUR_GOOGLE_FORM_LINK" target="_blank" class="btn btn-register">Register Here 2</a>
+  </div> -->
 
     
   </div>
@@ -51,7 +55,7 @@
 
   <script>
     // Set the date and time when the registration should open
-    const openTime = new Date("Oct 15, 2024 16:02:00").getTime();
+    const openTime = new Date("Oct 15, 2024 12:00:00").getTime();
 
     const countdownElement = document.getElementById("time");
     const formLink = document.getElementById("form-link");
