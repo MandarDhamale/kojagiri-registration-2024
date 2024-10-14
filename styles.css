@@ -95,7 +95,7 @@ footer {
 /* Adjust padding for content in mobile view */
 @media (max-width: 768px) {
   .content {
-    padding: 20px; /* Add padding to the content */
+    padding: 5px; /* Add padding to the content */
   }
 }
 
