@@ -90,7 +90,8 @@
 
   <script>
     // Set the date and time when the registration should open (IST)
-    const openTime = new Date("Oct 14, 2024 20:21:00").getTime();
+    const openTime = new Date("Oct 14, 2024 18:00:00").getTime();
+  
     const countdownElement = document.getElementById("time");
     const formLink = document.getElementById("form-link");
   
@@ -106,25 +107,20 @@
     }
   
     async function startCountdown() {
-      const now = await getCurrentTime(); // Get current time from API once
+      const now = await getCurrentTime(); // Get current time from API
+      const countdownInterval = setInterval(async () => {
+        const currentTime = await getCurrentTime(); // Update current time on each tick
+        const timeLeft = openTime - currentTime;
   
-      // Calculate the difference between the open time and the current time
-      const timeLeft = openTime - now;
-  
-      // Start the countdown interval
-      const countdownInterval = setInterval(() => {
-        // Calculate remaining time
-        const remainingTime = timeLeft - (Date.now() - now);
-  
-        if (remainingTime < 0) {
+        if (timeLeft < 0) {
           clearInterval(countdownInterval);
           countdownElement.innerHTML = "00:00:00"; // Show 00:00:00 when timer ends
           formLink.style.display = "block"; // Show the registration link
         } else {
           // Time calculations
-          const hours = Math.floor((remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+          const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
   
           // Add leading zeros to hours, minutes, and seconds
           const displayHours = hours < 10 ? '0' + hours : hours;
@@ -139,6 +135,7 @@
   
     startCountdown(); // Start the countdown
   </script>
+  
 
 
 </body>
