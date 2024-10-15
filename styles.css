@@ -40,7 +40,8 @@ body {
 
 /* Blinking animation */
 @keyframes blink {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 1;
   }
   50% {
@@ -50,7 +51,7 @@ body {
 
 /* Calligraphy heading */
 .calligraphy-heading {
-  font-family: 'Dancing Script', cursive;
+  font-family: "Dancing Script", cursive;
   font-size: 3rem;
   color: #014d4e;
   margin-bottom: 10px;
@@ -91,11 +92,9 @@ footer {
   margin-left: 10px;
 }
 
-
 /* Adjust padding for content in mobile view */
 @media (max-width: 768px) {
   .content {
     padding: 5px; /* Add padding to the content */
   }
 }
-
