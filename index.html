@@ -42,7 +42,7 @@
 
       <!-- Date the registration opens -->
       <p class="open-date">
-        <strong>Registration opens on October 25, 2024, at 12:00 PM.</strong>
+        <strong>Registration opens on November 25, 2024, at 6:00 PM.</strong>
       </p>
 
       <!-- Countdown timer -->
@@ -53,7 +53,10 @@
 
       <!-- Registration link -->
       <div id="form-link">
-        <a href="https://forms.gle/VV5nrXtfVvjnnKQ5A" target="_blank" class="btn btn-register"
+        <a
+          href="https://forms.gle/VV5nrXtfVvjnnKQ5A"
+          target="_blank"
+          class="btn btn-register"
           >Register Here</a
         >
       </div>
@@ -105,8 +108,7 @@
 
     <script>
       // Set the date and time when the registration should open (IST)
-      const openTime = new Date("Oct 17, 2024 21:59:00").getTime();
-
+      const openTime = new Date("Nov 25, 2024 18:00:00").getTime();
       const countdownElement = document.getElementById("time");
       const formLink = document.getElementById("form-link");
 
@@ -124,10 +126,15 @@
       }
 
       async function startCountdown() {
-        const now = await getCurrentTime(); // Get current time from API
-        const countdownInterval = setInterval(async () => {
-          const currentTime = await getCurrentTime(); // Update current time on each tick
-          const timeLeft = openTime - currentTime;
+        const now = await getCurrentTime(); // Get current time from API once
+
+        // Calculate the difference between the open time and the current time
+        let timeLeft = openTime - now;
+
+        // Start the countdown interval
+        const countdownInterval = setInterval(() => {
+          // Decrease time left over time
+          timeLeft -= 1000;
 
           if (timeLeft < 0) {
             clearInterval(countdownInterval);
@@ -135,6 +142,7 @@
             formLink.style.display = "block"; // Show the registration link
           } else {
             // Time calculations
+            const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
             const hours = Math.floor(
               (timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
             );
@@ -144,12 +152,13 @@
             const seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
 
             // Add leading zeros to hours, minutes, and seconds
+            const displayDays = days > 0 ? days + "d " : ""; // Only display days if there's more than 1
             const displayHours = hours < 10 ? "0" + hours : hours;
             const displayMinutes = minutes < 10 ? "0" + minutes : minutes;
             const displaySeconds = seconds < 10 ? "0" + seconds : seconds;
 
             // Display the result in the countdown element
-            countdownElement.innerHTML = `${displayHours}:${displayMinutes}:${displaySeconds}`;
+            countdownElement.innerHTML = `${displayDays}${displayHours}:${displayMinutes}:${displaySeconds}`;
           }
         }, 1000);
       }
